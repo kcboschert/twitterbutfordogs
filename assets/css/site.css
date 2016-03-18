@@ -12,8 +12,13 @@
   background-color: #ffffff;
 }
 
-.bark .avatar {
+.bark img.avatar {
+  border-radius: 5px;
   float: left;
+  height: 48px;
+  margin-top: 3px;
+  margin-left: -58px;
+  width: 48px;
 }
 
 li.bark {
