@@ -1,0 +1,52 @@
+.page {
+  background-color: #f5f8fa;
+  color: #292f33;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0;
+  padding-top: 60px;
+}
+
+.navbar-default {
+  background-color: #ffffff;
+}
+
+.bark .avatar {
+  float: left;
+}
+
+li.bark {
+  border-bottom: 1px solid #e1e8ed;
+  padding: 9px 12px;
+  padding-left: 70px;
+}
+
+.bark .bark-header .user-full-name {
+  font-weight: bold;
+}
+
+.bark .bark-header .user-name {
+  color: #8899a6;
+}
+
+.bark .bark-header .timestamp:before {
+  content: "\00b7";
+}
+
+.bark .bark-header .timestamp {
+  color: #8899a6;
+}
+
+.bark .bark-footer {
+  padding-top: 1px;
+}
+
+.bark .bark-footer span:nth-last-child(n+2) {
+  padding-right: 50px;
+}
+
+.glyphicon {
+  font-size: 1.25em;
+}
+

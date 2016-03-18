@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="It's a lot like Twitter, but for dogs.">
+
+  <title>Twitter, but for Dogs</title>
+
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+</head>
+
+<body class="page">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Twitter, but for Dogs</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="navbar-nav">
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-body">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default ">
+          <ol id="barks" class="list-group">
+          </ol>
+        </div>
+        <p>
+          <textarea id="out" rows="15" cols="50"></textarea>
+        </p>
+        <p>
+          <button id="generate">Generate</button>
+        </p>
+      </div>
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <div class="panel-body">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+  <script type="text/javascript" src="assets/js/markov.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+$(function() {
+  $.get("assets/tweets/text.txt", function(data) {
+    Markov.addText(data);
+
+    var barkTemplateSource = $("#bark-template").html();
+    var barkTemplate = Handlebars.compile(barkTemplateSource);
+    var barkStream = $("#barks");
+    for(var numBarks = 0; numBarks < 40; numBarks++) {
+      var barkContent = {body: Markov.getText()};
+      var barkHtml = barkTemplate(barkContent);
+      barkStream.append(barkHtml);
+    }
+  });
+});
+  </script>
+  <script id="bark-template" type="text/x-handlebars-template">
+    <li class="list-group-item bark">
+      <div class="bark-header">
+        <span class="user-full-name">Fido</span>
+        <span class="user-name">@fido</span>
+        <span class="timestamp"> 1m</span>
+      </div>
+      <div class="bark-content">
+        <p>
+          {{body}}
+        </p>
+      </div>
+      <div class="bark-footer">
+        <span class="bark-reply glyphicon glyphicon-send" aria-hidden="true"></span>
+        <span class="bark-rebark glyphicon glyphicon-refresh" aria-hidden="true"></span>
+        <span class="bark-like glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+        <span class="bark-more glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+      </div>
+    </li>
+  </script>
+
+</body>
+</html>
