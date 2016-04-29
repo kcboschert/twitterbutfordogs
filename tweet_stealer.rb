@@ -2,24 +2,6 @@ require 'csv'
 require 'twitter'
 
 class TweetStealer
-  DOG_NAMES = %w(
-    hachiko
-    lassie
-    toto
-    snoopy
-    pluto
-    rintintin
-    eddie
-    clifford
-    santoslhalper
-    marmaduke
-    odie
-    dug
-    balto
-    scoobydoo
-    scrappydoo
-  )
-
   def initialize
     @client = Twitter::REST::Client.new do |config|
       config.consumer_key        = ENV["TWITTER_CONSUMER_KEY"]
@@ -28,7 +10,8 @@ class TweetStealer
       config.access_token_secret = ENV["TWITTER_ACCESS_TOKEN_SECRET"]
     end
     @name_map = {}
-    @available_dog_names = DOG_NAMES.dup
+    @dog_names = File.read("assets/barks/dogs.txt").split("\n")
+    @available_dog_names = @dog_names.dup
   end
 
   def run(users)
@@ -40,7 +23,7 @@ class TweetStealer
 
     tweet_texts = sanitize_tweets(tweets)
 
-    File.write("assets/tweets/text.txt", tweet_texts.join("\n"))
+    File.write("assets/barks/text.txt", tweet_texts.join("\n"))
   end
 
   def sanitize_tweets(tweets)
@@ -94,7 +77,7 @@ class TweetStealer
 
   def get_dog_name(username)
     return @name_map[username] if @name_map[username]
-    @available_dog_names = DOG_NAMES.dup if @available_dog_names.empty?
+    @available_dog_names = @dog_names.dup if @available_dog_names.empty?
     @name_map[username] = @available_dog_names.delete(@available_dog_names.sample)
     @name_map[username]
   end
@@ -104,7 +87,7 @@ end
 if $PROGRAM_NAME == __FILE__
   users = ARGV
   unless users.any?
-    puts "USAGE: ruby tweets.rb [USERNAME_1] [USERNAME_2] ..."
+    puts "USAGE: ruby tweet_stealer.rb [USERNAME_1] [USERNAME_2] ..."
     exit
   end
 
