@@ -52,6 +52,7 @@ var Barker = {
         barkText = getBark();
       }
     }
+    barkText = barkText.replace(/\:$/,'.');
 
     var nameRegex = new RegExp("@" + dog);
     while(nameRegex.test(barkText)) {
