@@ -56,7 +56,7 @@ var Barker = {
 
     var nameRegex = new RegExp("@" + dog);
     while(nameRegex.test(barkText)) {
-      barkText.replace(nameRegex, "@" + this.getRandomDog());
+      barkText = barkText.replace(nameRegex, "@" + this.getRandomDog());
     }
     return barkText;
   },

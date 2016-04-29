@@ -91,9 +91,3 @@ var Markov = {
     }
   }
 };
-
-$(function() {
-  $('#generate').click(function() {
-    $('#out').val(Markov.getText());
-  });
-});

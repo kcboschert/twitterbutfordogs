@@ -41,12 +41,7 @@
           <ol id="barks" class="list-group">
           </ol>
         </div>
-        <p>
-          <textarea id="out" rows="15" cols="50"></textarea>
-        </p>
-        <p>
-          <button id="generate">Generate</button>
-        </p>
+        <a id="load-more-barks"></a>
       </div>
       <div class="col-md-3">
         <div class="panel panel-default">
@@ -58,15 +53,31 @@
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/shortcuts/inview.min.js"></script>
+
   <script type="text/javascript" src="assets/js/markov.js"></script>
   <script type="text/javascript" src="assets/js/barker.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script type="text/javascript">
+function infiniteScroll() {
+  var inview = new Waypoint.Inview({
+    element: $('#load-more-barks')[0],
+    enter: function(direction) {
+      if(direction == "down") {
+        this.disable();
+        Barker.generateBarks(20);
+        this.enable();
+      }
+    }
+  });
+}
 $(function() {
   Barker.getNames().done(function() {
     Barker.getSource().done(function() {
       Barker.generateBarks(20);
+      infiniteScroll();
     });
   });
 });
