@@ -63,18 +63,45 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script type="text/javascript">
 $(function() {
+  var tweets = null;
   $.get("assets/tweets/text.txt", function(data) {
     Markov.addText(data);
+    tweets = data.split("\n");
 
     var barkTemplateSource = $("#bark-template").html();
     var barkTemplate = Handlebars.compile(barkTemplateSource);
     var barkStream = $("#barks");
     for(var numBarks = 0; numBarks < 40; numBarks++) {
-      var barkContent = {body: Markov.getText()};
+      var barkContent = {body: getBark()};
       var barkHtml = barkTemplate(barkContent);
       barkStream.append(barkHtml);
     }
   });
+
+  function getBark()
+  {
+    var barkText = Markov.getText();
+    if(Math.floor(Math.random() * 5) == 0 && /(in|to|from|for|with|by|our|of|your|around|under|beyond)\s\w+$/.test(barkText)) {
+      barkText = barkText.replace(/\s\w+.$/,'');
+    }
+
+    if(barkText != null && barkText.length < 40) {
+      var rand = Math.floor(Math.random() * 11);
+      if(rand < 2) {
+        barkText += " " + Markov.getText();
+      }
+      else if(rand == 3) {
+        barkText.toUpperCase();
+      }
+    }
+
+    if(barkText != null && barkText < 110) {
+      if($.inArray(barkText, tweets)) {
+        barkText = getBark();
+      }
+    }
+    return barkText;
+  }
 });
   </script>
   <script id="bark-template" type="text/x-handlebars-template">
