@@ -1,3 +1,5 @@
+// Inspiration: https://github.com/tommeagher/heroku_ebooks
+
 var Markov = {
   starts      : [],
   freq        : {},

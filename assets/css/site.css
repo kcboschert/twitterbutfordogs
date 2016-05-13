@@ -55,3 +55,16 @@ li.bark {
   font-size: 1.25em;
 }
 
+.bullet {
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.center {
+  text-align: center;
+}
+
+p {
+  margin-top: 5px;
+  margin-left: 5px;
+}
