@@ -10,8 +10,7 @@ class TweetStealer
       config.access_token_secret = ENV["TWITTER_ACCESS_TOKEN_SECRET"]
     end
     @name_map = {}
-    @dog_names = File.read("assets/barks/dogs.txt").split("\n")
-    @available_dog_names = @dog_names.dup
+    @available_dog_names = self.class.dog_names.dup
   end
 
   def run(users)
@@ -77,9 +76,13 @@ class TweetStealer
 
   def get_dog_name(username)
     return @name_map[username] if @name_map[username]
-    @available_dog_names = @dog_names.dup if @available_dog_names.empty?
+    @available_dog_names = self.class.dog_names.dup if @available_dog_names.empty?
     @name_map[username] = @available_dog_names.delete(@available_dog_names.sample)
     @name_map[username]
+  end
+
+  def self.dog_names
+    @dog_names = File.read("assets/barks/dogs.txt").split("\n")
   end
 end
 
