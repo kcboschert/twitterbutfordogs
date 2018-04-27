@@ -1,5 +1,7 @@
 # twitterbutfordogs
 
+[![Build Status](https://travis-ci.org/kcboschert/twitterbutfordogs.svg?branch=master)](https://travis-ci.org/kcboschert/twitterbutfordogs)
+
 ## How can I add a dog?
 
 * Add the dog's name to `assets/barks/dogs.txt`
