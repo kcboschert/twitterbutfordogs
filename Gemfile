@@ -2,6 +2,6 @@ source "https://rubygems.org"
 
 group :development, :test do
   gem "rspec", "3.4.0"
-  gem "rake"
+  gem "rake", "~> 13.0.3"
 end
-gem "twitter", "5.16.0"
+gem "twitter", "~> 6.2.0"
